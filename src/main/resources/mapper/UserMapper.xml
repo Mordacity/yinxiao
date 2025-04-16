@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yinxiao.nothing.mapper.UserMapper">
+
+    <select id="findByUsernameAndPassword" resultType="org.yinxiao.nothing.entity.User">
+        SELECT * FROM user WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <insert id="addUser" parameterType="org.yinxiao.nothing.entity.User">
+        INSERT INTO user (username, password) VALUES (#{username}, #{password})
+    </insert>
+
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="org.yinxiao.nothing.entity.User">
+        UPDATE user
+        SET username = #{username}, password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getUserById" resultType="org.yinxiao.nothing.entity.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="getAllUsers" resultType="org.yinxiao.nothing.entity.User">
+        SELECT * FROM user
+    </select>
+</mapper>    
