@@ -1,3 +1,5 @@
+server:
+  port: 8081
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
@@ -14,6 +16,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: org.yinxiao.nothing.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    # 驼峰命名
 # JWT 配置
 jwt:
   secret: jdo+k_703Y#5<ExUl;0CoCmq^;9poP]]b?&i|7{?q{GmWr>T6}P:p*rG1|[fvhv$=Kr:z+eSimq93&++ZHrgi2M/YM\yG0Yi$%P?  # 替换为至少 32 字节的随机字符串
@@ -22,6 +27,7 @@ jwt:
 logging:
   level:
     org.yinxiao.nothing: info # 控制项目中特定包的日志级别
+    org.yinxiao.nothing.mapper: debug
     org.springframework: info # 控制 Spring 框架的日志级别
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

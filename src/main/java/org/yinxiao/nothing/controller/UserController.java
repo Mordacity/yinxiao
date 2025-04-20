@@ -48,7 +48,7 @@ public class UserController {
             resultMap.put("user", user);
             return Result.success(resultMap);
         } else {
-            return Result.fail("用户名或密码错误");
+            return Result.fail(508,"用户名或密码错误");
         }
     }
 
@@ -68,7 +68,7 @@ public class UserController {
         if (result > 0) {
             return Result.success("用户添加成功");
         } else {
-            return Result.fail("用户添加失败");
+            return Result.fail(501,"用户添加失败");
         }
     }
 
@@ -84,7 +84,7 @@ public class UserController {
         if (result > 0) {
             return Result.success("用户删除成功");
         } else {
-            return Result.fail("用户删除失败");
+            return Result.fail(502,"用户删除失败");
         }
     }
 
@@ -114,7 +114,7 @@ public class UserController {
             return Result.success("用户修改成功");
         } else {
             // 修改失败
-            return Result.fail("用户修改失败");
+            return Result.fail(503,"用户修改失败");
         }
     }
 
@@ -131,7 +131,7 @@ public class UserController {
             UserDTO userDTO = UserDTO.fromUser(user);
             return Result.success(userDTO);
         } else {
-            return Result.fail("用户不存在");
+            return Result.fail(507,"用户不存在");
         }
     }
 

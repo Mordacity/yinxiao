@@ -35,7 +35,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             // 创建ObjectMapper对象
             ObjectMapper objectMapper = new ObjectMapper();
             // 将Result.fail("请登录")转换为JSON字符串
-            String jsonResponse = objectMapper.writeValueAsString(Result.fail("请登录"));
+            String jsonResponse = objectMapper.writeValueAsString(Result.fail(508,"请登录"));
             // 将JSON字符串写入响应
             response.getWriter().write(jsonResponse);
             // 返回false，表示请求未通过验证

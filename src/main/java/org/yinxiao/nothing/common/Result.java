@@ -32,7 +32,18 @@ public class Result<T> {
      * @param <T> 数据类型
      * @return 结果对象
      */
-    public static <T> Result<T> fail(String message) {
-        return new Result<>(500, message, null);
+    public static <T> Result<T> fail(Integer code,String message) {
+        return new Result<>(code, message, null);
     }
+    /**
+     * 501 插入失败
+     * 502 删除失败
+     * 503 更新失败
+     * 504 登录失败
+     * 505 未传递正确参数
+     * 506 未传递参数
+     * 507 未找到数据
+     * 508 未登录
+     * 509 数据已存在
+     */
 }    
