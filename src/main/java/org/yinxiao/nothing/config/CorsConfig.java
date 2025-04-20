@@ -1,5 +1,13 @@
 package org.yinxiao.nothing.config;
 
+/**
+ * @Title: CorsConfig
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.config
+ * @Date: 2025/4/20 16:39
+ */
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;

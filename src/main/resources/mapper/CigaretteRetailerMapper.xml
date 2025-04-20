@@ -4,109 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.yinxiao.nothing.mapper.CigaretteRetailerMapper">
 
-    <insert id="addRetailer" parameterType="org.yinxiao.nothing.entity.CigaretteRetailer">
-        INSERT INTO cigarette_retailer_info (
-            uuid,
-            resident_population,
-            student_count_this_semester,
-            staying_rate_during_holidays,
-            smoking_rate,
-            student_regulation_ratio,
-            geographical_weight,
-            sales_intensity_coefficient,
-            weekly_sales,
-            gear_coefficient,
-            service_request_count,
-            abnormal_sales_count,
-            inventory_sales_ratio,
-            full_order_rate_fluctuation,
-            retailer_license_number,
-            retailer_name
-        ) VALUES (
-                     #{uuid},
-                     #{residentPopulation},
-                     #{studentCountThisSemester},
-                     #{stayingRateDuringHolidays},
-                     #{smokingRate},
-                     #{studentRegulationRatio},
-                     #{geographicalWeight},
-                     #{salesIntensityCoefficient},
-                     #{weeklySales},
-                     #{gearCoefficient},
-                     #{serviceRequestCount},
-                     #{abnormalSalesCount},
-                     #{inventorySalesRatio},
-                     #{fullOrderRateFluctuation},
-                     #{retailerLicenseNumber},
-                     #{retailerName}
-                 )
+    <!-- 批量插入卷烟零售商信息 -->
+    <insert id="batchAddRetailers" parameterType="java.util.List">
+        INSERT INTO cigarette_retailer_info (certificate_number, shop_name, shop_owner)
+        VALUES
+        <!-- 遍历零售商列表，生成插入语句 -->
+        <foreach collection="list" item="item" separator=",">
+            (#{item.certificateNumber}, #{item.shopName}, #{item.shopOwner})
+        </foreach>
+        <!-- 若证件号已存在，则跳过当前数据 -->
+        ON DUPLICATE KEY UPDATE id = id
     </insert>
 
-    <delete id="deleteRetailer" parameterType="string">
-        DELETE FROM cigarette_retailer_info WHERE uuid = #{uuid}
+    <!-- 根据证件号删除卷烟零售商信息 -->
+    <delete id="deleteRetailerByCertificateNumber" parameterType="string">
+        DELETE FROM cigarette_retailer_info WHERE certificate_number = #{certificateNumber}
     </delete>
 
-    <update id="updateRetailer" parameterType="org.yinxiao.nothing.entity.CigaretteRetailer">
+    <!-- 根据证件号修改卷烟零售商信息 -->
+    <update id="updateRetailerByCertificateNumber" parameterType="org.yinxiao.nothing.entity.CigaretteRetailer">
         UPDATE cigarette_retailer_info
         SET
-            resident_population = #{residentPopulation},
-            student_count_this_semester = #{studentCountThisSemester},
-            staying_rate_during_holidays = #{stayingRateDuringHolidays},
-            smoking_rate = #{smokingRate},
-            student_regulation_ratio = #{studentRegulationRatio},
-            geographical_weight = #{geographicalWeight},
-            sales_intensity_coefficient = #{salesIntensityCoefficient},
-            weekly_sales = #{weeklySales},
-            gear_coefficient = #{gearCoefficient},
-            service_request_count = #{serviceRequestCount},
-            abnormal_sales_count = #{abnormalSalesCount},
-            inventory_sales_ratio = #{inventorySalesRatio},
-            full_order_rate_fluctuation = #{fullOrderRateFluctuation},
-            retailer_license_number = #{retailerLicenseNumber},
-            retailer_name = #{retailerName}
-        WHERE uuid = #{uuid}
+            shop_name = #{shopName},
+            shop_owner = #{shopOwner}
+        WHERE certificate_number = #{certificateNumber}
     </update>
 
-    <select id="getRetailerByUuid" resultType="org.yinxiao.nothing.entity.CigaretteRetailer">
-        SELECT
-            uuid,
-            resident_population,
-            student_count_this_semester,
-            staying_rate_during_holidays,
-            smoking_rate,
-            student_regulation_ratio,
-            geographical_weight,
-            sales_intensity_coefficient,
-            weekly_sales,
-            gear_coefficient,
-            service_request_count,
-            abnormal_sales_count,
-            inventory_sales_ratio,
-            full_order_rate_fluctuation,
-            retailer_license_number,
-            retailer_name
-        FROM cigarette_retailer_info
-        WHERE uuid = #{uuid}
+    <!-- 根据证件号查询卷烟零售商信息 -->
+    <select id="getRetailerByCertificateNumber" resultType="org.yinxiao.nothing.entity.CigaretteRetailer">
+        SELECT * FROM cigarette_retailer_info WHERE certificate_number = #{certificateNumber}
     </select>
 
+    <!-- 分页查询所有卷烟零售商信息，每页 15 条数据 -->
     <select id="getAllRetailers" resultType="org.yinxiao.nothing.entity.CigaretteRetailer">
-        SELECT
-            uuid,
-            resident_population,
-            student_count_this_semester,
-            staying_rate_during_holidays,
-            smoking_rate,
-            student_regulation_ratio,
-            geographical_weight,
-            sales_intensity_coefficient,
-            weekly_sales,
-            gear_coefficient,
-            service_request_count,
-            abnormal_sales_count,
-            inventory_sales_ratio,
-            full_order_rate_fluctuation,
-            retailer_license_number,
-            retailer_name
-        FROM cigarette_retailer_info
+        SELECT * FROM cigarette_retailer_info LIMIT #{offset}, #{limit}
     </select>
 </mapper>

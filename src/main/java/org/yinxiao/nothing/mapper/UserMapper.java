@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.mapper;
 
+/**
+ * @Title: UserMapper
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.mapper
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.apache.ibatis.annotations.Mapper;
 import org.yinxiao.nothing.entity.User;
 

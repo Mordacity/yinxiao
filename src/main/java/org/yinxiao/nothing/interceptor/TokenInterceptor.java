@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.interceptor;
 
+/**
+ * @Title: TokenInterceptor
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.interceptor
+ * @Date: 2025/4/20 16:39
+ */
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

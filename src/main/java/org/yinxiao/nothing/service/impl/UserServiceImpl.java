@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.service.impl;
 
+/**
+ * @Title: UserServiceImpl
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.service.impl
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yinxiao.nothing.entity.User;

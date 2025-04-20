@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.utils;
 
+/**
+ * @Title: JwtUtil
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.utils
+ * @Date: 2025/4/20 16:39
+ */
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

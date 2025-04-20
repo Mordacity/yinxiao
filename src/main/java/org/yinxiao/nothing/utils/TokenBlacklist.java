@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.utils;
 
+/**
+ * @Title: TokenBlacklist
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.utils
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;

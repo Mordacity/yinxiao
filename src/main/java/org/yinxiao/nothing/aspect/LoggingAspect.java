@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.aspect;
 
+/**
+ * @Title: LoggingAspect
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.aspect
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.config;
 
+/**
+ * @Title: WebMvcConfig
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.config
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

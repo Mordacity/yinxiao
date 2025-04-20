@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.service;
 
+/**
+ * @Title: UserService
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.service
+ * @Date: 2025/4/20 16:39
+ */
+
 import org.yinxiao.nothing.entity.User;
 
 import java.util.List;

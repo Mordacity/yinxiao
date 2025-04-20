@@ -1,5 +1,12 @@
 package org.yinxiao.nothing.entity;
 
+/**
+ * @Title: UserDTO
+ * @Author: 江河三千里
+ * @Package: org.yinxiao.nothing.entity
+ * @Date: 2025/4/20 16:39
+ */
+
 import lombok.Data;
 
 @Data

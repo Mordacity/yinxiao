@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yinxiao.nothing.mapper.CommunityRetailerMapper">
+
+    <insert id="addCommunityRetailers" parameterType="java.util.List">
+        INSERT INTO community_retailer (certificate_number, community_name)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.certificateNumber}, #{item.communityName})
+        </foreach>
+        ON DUPLICATE KEY UPDATE id = id; <!-- 若证件号已存在，跳过当前数据 -->
+    </insert>
+
+    <delete id="deleteCommunityRetailer" parameterType="string">
+        DELETE FROM community_retailer WHERE certificate_number = #{certificateNumber}
+    </delete>
+
+    <update id="updateCommunityRetailer" parameterType="org.yinxiao.nothing.entity.CommunityRetailer">
+        UPDATE community_retailer
+        SET community_name = #{communityName}
+        WHERE certificate_number = #{certificateNumber}
+    </update>
+
+    <select id="getCommunityRetailerByCertificateNumber" resultType="org.yinxiao.nothing.entity.CommunityRetailer">
+        SELECT * FROM community_retailer WHERE certificate_number = #{certificateNumber}
+    </select>
+
+    <select id="getAllCommunityRetailers" resultType="org.yinxiao.nothing.entity.CommunityRetailer">
+        SELECT * FROM community_retailer LIMIT #{offset}, #{limit}
+    </select>
+</mapper>

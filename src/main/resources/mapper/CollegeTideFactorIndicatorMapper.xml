@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yinxiao.nothing.mapper.CollegeTideFactorIndicatorMapper">
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO college_tide_factor_indicator (
+        certificate_number,
+        university_name,
+        resident_population,
+        current_semester_students,
+        holiday_staying_rate,
+        smoking_rate,
+        geographical_weight,
+        data_date
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.certificateNumber},
+            #{item.universityName},
+            #{item.residentPopulation},
+            #{item.currentSemesterStudents},
+            #{item.holidayStayingRate},
+            #{item.smokingRate},
+            #{item.geographicalWeight},
+            CURDATE()
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByCertificateNumber" parameterType="string">
+        DELETE FROM college_tide_factor_indicator WHERE certificate_number = #{certificateNumber}
+    </delete>
+
+    <update id="updateByCertificateNumber" parameterType="org.yinxiao.nothing.entity.CollegeTideFactorIndicator">
+        UPDATE college_tide_factor_indicator
+        SET
+            university_name = #{universityName},
+            resident_population = #{residentPopulation},
+            current_semester_students = #{currentSemesterStudents},
+            holiday_staying_rate = #{holidayStayingRate},
+            smoking_rate = #{smokingRate},
+            geographical_weight = #{geographicalWeight},
+            data_date = CURDATE()
+        WHERE certificate_number = #{certificateNumber}
+    </update>
+
+    <select id="getByCertificateNumber" resultType="org.yinxiao.nothing.entity.CollegeTideFactorIndicator">
+        SELECT * FROM college_tide_factor_indicator WHERE certificate_number = #{certificateNumber}
+        ORDER BY data_date DESC
+    </select>
+
+    <select id="getAll" resultType="org.yinxiao.nothing.entity.CollegeTideFactorIndicator">
+        SELECT * FROM college_tide_factor_indicator
+        ORDER BY data_date DESC
+            LIMIT #{offset}, #{limit}
+    </select>
+</mapper>

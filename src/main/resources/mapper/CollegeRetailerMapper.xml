@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yinxiao.nothing.mapper.CollegeRetailerMapper">
+
+    <!-- 批量插入高校零售户信息 -->
+    <insert id="batchAddCollegeRetailers" parameterType="java.util.List">
+        INSERT INTO college_retailer (certificate_number, university_name)
+        VALUES
+        <!-- 遍历零售商列表，生成插入语句 -->
+        <foreach collection="list" item="item" separator=",">
+            (#{item.certificateNumber}, #{item.universityName})
+        </foreach>
+        <!-- 若证件号已存在，则跳过当前数据 -->
+        ON DUPLICATE KEY UPDATE id = id
+    </insert>
+
+    <!-- 根据证件号删除高校零售户信息 -->
+    <delete id="deleteCollegeRetailerByCertificateNumber" parameterType="string">
+        DELETE FROM college_retailer WHERE certificate_number = #{certificateNumber}
+    </delete>
+
+    <!-- 根据证件号修改高校零售户信息 -->
+    <update id="updateCollegeRetailerByCertificateNumber" parameterType="org.yinxiao.nothing.entity.CollegeRetailer">
+        UPDATE college_retailer
+        SET
+            university_name = #{universityName}
+        WHERE certificate_number = #{certificateNumber}
+    </update>
+
+    <!-- 根据证件号查询高校零售户信息 -->
+    <select id="getCollegeRetailerByCertificateNumber" resultType="org.yinxiao.nothing.entity.CollegeRetailer">
+        SELECT * FROM college_retailer WHERE certificate_number = #{certificateNumber}
+    </select>
+
+    <!-- 分页查询所有高校零售户信息，每页 15 条数据 -->
+    <select id="getAllCollegeRetailers" resultType="org.yinxiao.nothing.entity.CollegeRetailer">
+        SELECT * FROM college_retailer LIMIT #{offset}, #{limit}
+    </select>
+</mapper>
