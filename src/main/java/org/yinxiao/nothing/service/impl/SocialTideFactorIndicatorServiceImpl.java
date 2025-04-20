@@ -30,8 +30,8 @@ public class SocialTideFactorIndicatorServiceImpl implements SocialTideFactorInd
     }
 
     @Override
-    public int deleteByCertificateNumber(String certificateNumber) {
-        return mapper.deleteByCertificateNumber(certificateNumber);
+    public int deleteByCertificateNumber(String certificateNumber,Integer id) {
+        return mapper.deleteByCertificateNumber(certificateNumber,id);
     }
 
     @Override

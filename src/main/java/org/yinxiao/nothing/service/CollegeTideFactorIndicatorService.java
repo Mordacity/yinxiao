@@ -23,14 +23,14 @@ public interface CollegeTideFactorIndicatorService {
     int batchInsert(List<CollegeTideFactorIndicator> indicators);
 
     /**
-     * 根据证件号删除高校潮汐因子指标数据
+     * 根据证件号和ID删除高校潮汐因子指标数据
      * @param certificateNumber 证件号
      * @return 删除成功的记录数
      */
-    int deleteByCertificateNumber(String certificateNumber);
+    int deleteByCertificateNumber(String certificateNumber,Integer id);
 
     /**
-     * 根据证件号修改高校潮汐因子指标数据
+     * 根据证件号和ID修改高校潮汐因子指标数据
      * @param indicator 高校潮汐因子指标对象
      * @return 修改成功的记录数
      */

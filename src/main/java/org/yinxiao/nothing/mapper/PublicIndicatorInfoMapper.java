@@ -18,38 +18,39 @@ import java.util.List;
 @Mapper
 public interface PublicIndicatorInfoMapper {
     /**
-     * 批量添加公共指标数据信息
+     * 批量插入公共指标数据
      * @param publicIndicatorInfos 公共指标数据列表
      * @return 受影响的行数
      */
-    int addPublicIndicatorInfos(List<PublicIndicatorInfo> publicIndicatorInfos);
+    int batchInsert(List<PublicIndicatorInfo> publicIndicatorInfos);
 
     /**
-     * 根据证件号删除公共指标数据信息
+     * 根据证件号和 ID 删除公共指标数据
      * @param certificateNumber 证件号
+     * @param id 自增 ID
      * @return 受影响的行数
      */
-    int deletePublicIndicatorInfo(String certificateNumber);
+    int deleteByCertificateNumberAndId(String certificateNumber, Integer id);
 
     /**
-     * 根据证件号修改公共指标数据信息
-     * @param publicIndicatorInfo 公共指标数据信息
+     * 根据证件号和 ID 修改公共指标数据
+     * @param publicIndicatorInfo 公共指标数据对象
      * @return 受影响的行数
      */
-    int updatePublicIndicatorInfo(PublicIndicatorInfo publicIndicatorInfo);
+    int updateByCertificateNumberAndId(PublicIndicatorInfo publicIndicatorInfo);
 
     /**
-     * 根据证件号查询公共指标数据信息
+     * 根据证件号查询公共指标数据
      * @param certificateNumber 证件号
-     * @return 公共指标数据信息列表
+     * @return 公共指标数据列表
      */
-    List<PublicIndicatorInfo> getPublicIndicatorInfoByCertificateNumber(String certificateNumber);
+    List<PublicIndicatorInfo> getByCertificateNumber(String certificateNumber);
 
     /**
-     * 分页查询所有公共指标数据信息
+     * 查询所有公共指标数据，分页查询
      * @param offset 偏移量
      * @param limit 每页数量
-     * @return 公共指标数据信息列表
+     * @return 公共指标数据列表
      */
-    List<PublicIndicatorInfo> getAllPublicIndicatorInfos(int offset, int limit);
+    List<PublicIndicatorInfo> getAll(int offset, int limit);
 }

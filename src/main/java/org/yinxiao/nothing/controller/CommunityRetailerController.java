@@ -100,6 +100,9 @@ public class CommunityRetailerController {
         if (communityRetailer.getCommunityName().isEmpty()) {
             return Result.fail(505, "社区名称为空值");
         }
+        if (communityRetailer.getId() == null) {
+            return Result.fail(505, "ID数据为空值");
+        }
         int result = communityRetailerService.updateCommunityRetailer(communityRetailer);
         if (result > 0) {
             return Result.success("社区零售户信息修改成功");

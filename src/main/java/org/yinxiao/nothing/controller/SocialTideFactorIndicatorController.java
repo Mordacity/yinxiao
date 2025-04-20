@@ -65,13 +65,16 @@ public class SocialTideFactorIndicatorController {
      * @param certificateNumber 证件号
      * @return 删除结果
      */
-    @DeleteMapping("/delete/{certificateNumber}")
-    @ApiOperation("根据证件号删除社会潮汐因子指标数据")
-    public Result<String> deleteByCertificateNumber(@PathVariable String certificateNumber) {
+    @DeleteMapping("/delete")
+    @ApiOperation("根据证件号和ID删除社会潮汐因子指标数据")
+    public Result<String> deleteByCertificateNumber(@RequestParam String certificateNumber, @RequestParam Integer id) {
         if (certificateNumber == null || certificateNumber.isEmpty()) {
             return Result.fail(500, "证件号为空值");
         }
-        int result = service.deleteByCertificateNumber(certificateNumber);
+        if (id == null) {
+            return Result.fail(506, "ID 数据未传递");
+        }
+        int result = service.deleteByCertificateNumber(certificateNumber,id);
         if (result > 0) {
             return Result.success("社会潮汐因子指标数据删除成功");
         } else {
@@ -85,7 +88,7 @@ public class SocialTideFactorIndicatorController {
      * @return 修改结果
      */
     @PostMapping("/update")
-    @ApiOperation("根据证件号修改社会潮汐因子指标数据")
+    @ApiOperation("根据证件号和ID修改社会潮汐因子指标数据")
     public Result<String> updateByCertificateNumber(@RequestBody SocialTideFactorIndicator indicator) {
         if (indicator.getCertificateNumber() == null || indicator.getCertificateNumber().isEmpty()) {
             return Result.fail(500, "证件号为空值");

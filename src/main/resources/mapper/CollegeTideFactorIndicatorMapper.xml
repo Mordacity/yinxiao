@@ -29,8 +29,8 @@
         </foreach>
     </insert>
 
-    <delete id="deleteByCertificateNumber" parameterType="string">
-        DELETE FROM college_tide_factor_indicator WHERE certificate_number = #{certificateNumber}
+    <delete id="deleteByCertificateNumber" parameterType="map">
+        DELETE FROM college_tide_factor_indicator WHERE certificate_number = #{certificateNumber} AND id = #{id}
     </delete>
 
     <update id="updateByCertificateNumber" parameterType="org.yinxiao.nothing.entity.CollegeTideFactorIndicator">
@@ -43,7 +43,7 @@
             smoking_rate = #{smokingRate},
             geographical_weight = #{geographicalWeight},
             data_date = CURDATE()
-        WHERE certificate_number = #{certificateNumber}
+        WHERE certificate_number = #{certificateNumber} AND id = #{id}
     </update>
 
     <select id="getByCertificateNumber" resultType="org.yinxiao.nothing.entity.CollegeTideFactorIndicator">

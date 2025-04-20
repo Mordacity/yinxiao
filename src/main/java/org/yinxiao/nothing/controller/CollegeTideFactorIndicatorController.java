@@ -56,16 +56,19 @@ public class CollegeTideFactorIndicatorController {
      * @param certificateNumber 证件号
      * @return 删除结果
      */
-    @DeleteMapping("/delete/{certificateNumber}")
-    @ApiOperation("根据证件号删除高校潮汐因子指标数据")
-    public Result<String> deleteByCertificateNumber(@PathVariable String certificateNumber) {
+    @DeleteMapping("/delete")
+    @ApiOperation("根据证件号和ID删除高校潮汐因子指标数据")
+    public Result<String> deleteByCertificateNumber(@RequestParam String certificateNumber, @RequestParam Integer id) {
         if (certificateNumber == null) {
             return Result.fail(506, "证件号数据未传递");
         }
         if (certificateNumber.isEmpty()) {
             return Result.fail(505, "证件号为空值");
         }
-        int result = collegeTideFactorIndicatorService.deleteByCertificateNumber(certificateNumber);
+        if (id == null) {
+            return Result.fail(506, "ID数据未传递");
+        }
+        int result = collegeTideFactorIndicatorService.deleteByCertificateNumber(certificateNumber,id);
         if (result > 0) {
             return Result.success("高校潮汐因子指标数据删除成功");
         } else {
@@ -79,7 +82,7 @@ public class CollegeTideFactorIndicatorController {
      * @return 修改结果
      */
     @PostMapping("/update")
-    @ApiOperation("根据证件号修改高校潮汐因子指标数据")
+    @ApiOperation("根据证件号和ID修改高校潮汐因子指标数据")
     public Result<String> updateByCertificateNumber(@RequestBody CollegeTideFactorIndicator indicator) {
         if (indicator.getCertificateNumber() == null) {
             return Result.fail(506, "证件号数据未传递");
@@ -87,6 +90,10 @@ public class CollegeTideFactorIndicatorController {
         if (indicator.getCertificateNumber().isEmpty()) {
             return Result.fail(505, "证件号为空值");
         }
+        if (indicator.getId() == null) {
+            return Result.fail(508, "ID数据未传递");
+        }
+        // 其他字段的校验可以根据需要添加
         int result = collegeTideFactorIndicatorService.updateByCertificateNumber(indicator);
         if (result > 0) {
             return Result.success("高校潮汐因子指标数据修改成功");
@@ -94,6 +101,7 @@ public class CollegeTideFactorIndicatorController {
             return Result.fail(503, "高校潮汐因子指标数据修改失败");
         }
     }
+
 
     /**
      * 根据证件号查询高校潮汐因子指标数据

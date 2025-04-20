@@ -29,13 +29,14 @@ public class PublicIndicatorInfoController {
     private PublicIndicatorInfoService publicIndicatorInfoService;
 
     /**
-     * 批量添加公共指标数据信息
+     * 批量插入公共指标数据接口
      * @param publicIndicatorInfos 公共指标数据列表
-     * @return 添加结果
+     * @return 插入结果
      */
-    @PostMapping("/add-batch")
-    @ApiOperation("批量添加公共指标数据信息")
-    public Result<String> addPublicIndicatorInfos(@RequestBody List<PublicIndicatorInfo> publicIndicatorInfos) {
+    @PostMapping("/batch-insert")
+    @ApiOperation("批量插入公共指标数据")
+    public Result<String> batchInsert(@RequestBody List<PublicIndicatorInfo> publicIndicatorInfos) {
+        // 检查前端返回值是否为空
         for (PublicIndicatorInfo info : publicIndicatorInfos) {
             if (info.getCertificateNumber() == null) {
                 return Result.fail(506, "证件号数据未传递");
@@ -43,92 +44,97 @@ public class PublicIndicatorInfoController {
             if (info.getCertificateNumber().isEmpty()) {
                 return Result.fail(505, "证件号为空值");
             }
-            // 其他字段的校验可以根据需要添加
+            // 可根据需要添加其他字段的检查
         }
-        int result = publicIndicatorInfoService.addPublicIndicatorInfos(publicIndicatorInfos);
+        int result = publicIndicatorInfoService.batchInsert(publicIndicatorInfos);
         if (result > 0) {
-            return Result.success("公共指标数据信息添加成功");
+            return Result.success("公共指标数据批量插入成功");
         } else {
-            return Result.fail(501, "公共指标数据信息添加失败");
+            return Result.fail(501, "公共指标数据批量插入失败");
         }
     }
 
     /**
-     * 根据证件号删除公共指标数据信息
+     * 根据证件号和 ID 删除公共指标数据接口
      * @param certificateNumber 证件号
+     * @param id 自增 ID
      * @return 删除结果
      */
-    @DeleteMapping("/delete/{certificateNumber}")
-    @ApiOperation("根据证件号删除公共指标数据信息")
-    public Result<String> deletePublicIndicatorInfo(@PathVariable String certificateNumber) {
+    @DeleteMapping("/delete")
+    @ApiOperation("根据证件号和 ID 删除公共指标数据")
+    public Result<String> deleteByCertificateNumberAndId(@RequestParam String certificateNumber, @RequestParam Integer id) {
+        // 检查前端返回值是否为空
         if (certificateNumber == null) {
             return Result.fail(506, "证件号数据未传递");
         }
         if (certificateNumber.isEmpty()) {
             return Result.fail(505, "证件号为空值");
         }
-        int result = publicIndicatorInfoService.deletePublicIndicatorInfo(certificateNumber);
+        if (id == null) {
+            return Result.fail(506, "ID 数据未传递");
+        }
+        int result = publicIndicatorInfoService.deleteByCertificateNumberAndId(certificateNumber, id);
         if (result > 0) {
-            return Result.success("公共指标数据信息删除成功");
+            return Result.success("公共指标数据删除成功");
         } else {
-            return Result.fail(502, "公共指标数据信息删除失败");
+            return Result.fail(502, "公共指标数据删除失败");
         }
     }
 
     /**
-     * 根据证件号修改公共指标数据信息
-     * @param publicIndicatorInfo 公共指标数据信息
+     * 根据证件号和 ID 修改公共指标数据接口
+     * @param publicIndicatorInfo 公共指标数据对象
      * @return 修改结果
      */
     @PostMapping("/update")
-    @ApiOperation("根据证件号修改公共指标数据信息")
-    public Result<String> updatePublicIndicatorInfo(@RequestBody PublicIndicatorInfo publicIndicatorInfo) {
+    @ApiOperation("根据证件号和 ID 修改公共指标数据")
+    public Result<String> updateByCertificateNumberAndId(@RequestBody PublicIndicatorInfo publicIndicatorInfo) {
+        // 检查前端返回值是否为空
         if (publicIndicatorInfo.getCertificateNumber() == null) {
             return Result.fail(506, "证件号数据未传递");
         }
         if (publicIndicatorInfo.getCertificateNumber().isEmpty()) {
             return Result.fail(505, "证件号为空值");
         }
-        // 其他字段的校验可以根据需要添加
-        int result = publicIndicatorInfoService.updatePublicIndicatorInfo(publicIndicatorInfo);
+        if (publicIndicatorInfo.getId() == null) {
+            return Result.fail(506, "ID 数据未传递");
+        }
+        int result = publicIndicatorInfoService.updateByCertificateNumberAndId(publicIndicatorInfo);
         if (result > 0) {
-            return Result.success("公共指标数据信息修改成功");
+            return Result.success("公共指标数据修改成功");
         } else {
-            return Result.fail(503, "公共指标数据信息修改失败");
+            return Result.fail(503, "公共指标数据修改失败");
         }
     }
 
     /**
-     * 根据证件号查询公共指标数据信息
+     * 根据证件号查询公共指标数据接口
      * @param certificateNumber 证件号
-     * @return 公共指标数据信息列表
+     * @return 公共指标数据列表
      */
-    @GetMapping("/get")
-    @ApiOperation("根据证件号查询公共指标数据信息")
-    public Result<List<PublicIndicatorInfo>> getPublicIndicatorInfo(@RequestParam String certificateNumber) {
+    @GetMapping("/get-by-certificate-number")
+    @ApiOperation("根据证件号查询公共指标数据")
+    public Result<List<PublicIndicatorInfo>> getByCertificateNumber(@RequestParam String certificateNumber) {
+        // 检查前端返回值是否为空
         if (certificateNumber == null) {
             return Result.fail(506, "证件号数据未传递");
         }
         if (certificateNumber.isEmpty()) {
             return Result.fail(505, "证件号为空值");
         }
-        List<PublicIndicatorInfo> infos = publicIndicatorInfoService.getPublicIndicatorInfoByCertificateNumber(certificateNumber);
-        if (!infos.isEmpty()) {
-            return Result.success(infos);
-        } else {
-            return Result.fail(507, "未找到该证件号对应的公共指标数据信息");
-        }
+        List<PublicIndicatorInfo> publicIndicatorInfos = publicIndicatorInfoService.getByCertificateNumber(certificateNumber);
+        return Result.success(publicIndicatorInfos);
     }
 
     /**
-     * 分页查询所有公共指标数据信息
+     * 查询所有公共指标数据接口，分页查询
      * @param page 页码
-     * @return 公共指标数据信息列表
+     * @return 公共指标数据列表
      */
     @GetMapping("/get-all")
-    @ApiOperation("分页查询所有公共指标数据信息")
-    public Result<List<PublicIndicatorInfo>> getAllPublicIndicatorInfos(@RequestParam int page) {
-        List<PublicIndicatorInfo> infos = publicIndicatorInfoService.getAllPublicIndicatorInfos(page);
-        return Result.success(infos);
+    @ApiOperation("查询所有公共指标数据，分页查询")
+    public Result<List<PublicIndicatorInfo>> getAll(@RequestParam int page) {
+        List<PublicIndicatorInfo> publicIndicatorInfos = publicIndicatorInfoService.getAll(page);
+        return Result.success(publicIndicatorInfos);
     }
 }

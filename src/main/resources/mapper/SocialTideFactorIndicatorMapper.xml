@@ -27,11 +27,11 @@
     </insert>
 
     <!-- 根据证件号删除社会潮汐因子指标数据 -->
-    <delete id="deleteByCertificateNumber" parameterType="string">
-        DELETE FROM social_tide_factor_indicator WHERE certificate_number = #{certificateNumber}
+    <delete id="deleteByCertificateNumber" parameterType="map">
+        DELETE FROM social_tide_factor_indicator WHERE certificate_number = #{certificateNumber} AND id= #{id}
     </delete>
 
-    <!-- 根据证件号修改社会潮汐因子指标数据 -->
+    <!-- 根据证件号和id修改社会潮汐因子指标数据 -->
     <update id="updateByCertificateNumber" parameterType="org.yinxiao.nothing.entity.SocialTideFactorIndicator">
         UPDATE social_tide_factor_indicator
         SET
@@ -40,7 +40,7 @@
             smoking_rate = #{smokingRate},
             geographical_weight = #{geographicalWeight},
             data_date = CURDATE()
-        WHERE certificate_number = #{certificateNumber}
+        WHERE certificate_number = #{certificateNumber} AND id={#id}
     </update>
 
     <!-- 根据证件号查询社会潮汐因子指标数据 -->

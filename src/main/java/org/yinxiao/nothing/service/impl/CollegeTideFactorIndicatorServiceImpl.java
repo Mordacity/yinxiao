@@ -30,8 +30,8 @@ public class CollegeTideFactorIndicatorServiceImpl implements CollegeTideFactorI
     }
 
     @Override
-    public int deleteByCertificateNumber(String certificateNumber) {
-        return collegeTideFactorIndicatorMapper.deleteByCertificateNumber(certificateNumber);
+    public int deleteByCertificateNumber(String certificateNumber,Integer id) {
+        return collegeTideFactorIndicatorMapper.deleteByCertificateNumber(certificateNumber,id);
     }
 
     @Override

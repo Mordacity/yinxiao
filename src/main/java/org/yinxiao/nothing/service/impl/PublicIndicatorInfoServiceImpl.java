@@ -25,28 +25,28 @@ public class PublicIndicatorInfoServiceImpl implements PublicIndicatorInfoServic
     private PublicIndicatorInfoMapper publicIndicatorInfoMapper;
 
     @Override
-    public int addPublicIndicatorInfos(List<PublicIndicatorInfo> publicIndicatorInfos) {
-        return publicIndicatorInfoMapper.addPublicIndicatorInfos(publicIndicatorInfos);
+    public int batchInsert(List<PublicIndicatorInfo> publicIndicatorInfos) {
+        return publicIndicatorInfoMapper.batchInsert(publicIndicatorInfos);
     }
 
     @Override
-    public int deletePublicIndicatorInfo(String certificateNumber) {
-        return publicIndicatorInfoMapper.deletePublicIndicatorInfo(certificateNumber);
+    public int deleteByCertificateNumberAndId(String certificateNumber, Integer id) {
+        return publicIndicatorInfoMapper.deleteByCertificateNumberAndId(certificateNumber, id);
     }
 
     @Override
-    public int updatePublicIndicatorInfo(PublicIndicatorInfo publicIndicatorInfo) {
-        return publicIndicatorInfoMapper.updatePublicIndicatorInfo(publicIndicatorInfo);
+    public int updateByCertificateNumberAndId(PublicIndicatorInfo publicIndicatorInfo) {
+        return publicIndicatorInfoMapper.updateByCertificateNumberAndId(publicIndicatorInfo);
     }
 
     @Override
-    public List<PublicIndicatorInfo> getPublicIndicatorInfoByCertificateNumber(String certificateNumber) {
-        return publicIndicatorInfoMapper.getPublicIndicatorInfoByCertificateNumber(certificateNumber);
+    public List<PublicIndicatorInfo> getByCertificateNumber(String certificateNumber) {
+        return publicIndicatorInfoMapper.getByCertificateNumber(certificateNumber);
     }
 
     @Override
-    public List<PublicIndicatorInfo> getAllPublicIndicatorInfos(int page) {
+    public List<PublicIndicatorInfo> getAll(int page) {
         int offset = (page - 1) * 15;
-        return publicIndicatorInfoMapper.getAllPublicIndicatorInfos(offset, 15);
+        return publicIndicatorInfoMapper.getAll(offset, 15);
     }
 }

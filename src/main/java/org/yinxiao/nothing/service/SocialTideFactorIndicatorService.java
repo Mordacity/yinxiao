@@ -26,10 +26,10 @@ public interface SocialTideFactorIndicatorService {
      * @param certificateNumber 证件号
      * @return 受影响的行数
      */
-    int deleteByCertificateNumber(String certificateNumber);
+    int deleteByCertificateNumber(String certificateNumber,Integer id);
 
     /**
-     * 根据证件号修改社会潮汐因子指标数据
+     * 根据证件号和ID修改社会潮汐因子指标数据
      * @param indicator 社会潮汐因子指标对象
      * @return 受影响的行数
      */

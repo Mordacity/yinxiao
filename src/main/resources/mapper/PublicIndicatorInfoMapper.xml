@@ -4,27 +4,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.yinxiao.nothing.mapper.PublicIndicatorInfoMapper">
 
-    <insert id="addPublicIndicatorInfos" parameterType="java.util.List">
-        INSERT INTO public_indicator_info (certificate_number, student_spec_ratio, geographical_weight,
-        sales_intensity_coefficient, weekly_sales, gear_coefficient,
-        service_request_count, abnormal_sales_count, inventory_sales_ratio,
-        full_order_rate_fluctuation, data_date)
-        VALUES
+    <!-- 批量插入公共指标数据 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO public_indicator_info (
+        certificate_number,
+        student_spec_ratio,
+        geographical_weight,
+        sales_intensity_coefficient,
+        weekly_sales,
+        gear_coefficient,
+        service_request_count,
+        abnormal_sales_count,
+        inventory_sales_ratio,
+        full_order_rate_fluctuation,
+        data_date
+        ) VALUES
         <foreach collection="list" item="item" separator=",">
-            (#{item.certificateNumber}, #{item.studentSpecRatio}, #{item.geographicalWeight},
-            #{item.salesIntensityCoefficient}, #{item.weeklySales}, #{item.gearCoefficient},
-            #{item.serviceRequestCount}, #{item.abnormalSalesCount}, #{item.inventorySalesRatio},
-            #{item.fullOrderRateFluctuation}, CURDATE())
+            (
+            #{item.certificateNumber},
+            #{item.studentSpecRatio},
+            #{item.geographicalWeight},
+            #{item.salesIntensityCoefficient},
+            #{item.weeklySales},
+            #{item.gearCoefficient},
+            #{item.serviceRequestCount},
+            #{item.abnormalSalesCount},
+            #{item.inventorySalesRatio},
+            #{item.fullOrderRateFluctuation},
+            CURDATE()
+            )
         </foreach>
     </insert>
 
-    <delete id="deletePublicIndicatorInfo" parameterType="string">
-        DELETE FROM public_indicator_info WHERE certificate_number = #{certificateNumber}
+    <!-- 根据证件号和 ID 删除公共指标数据 -->
+    <delete id="deleteByCertificateNumberAndId" parameterType="map">
+        DELETE FROM public_indicator_info
+        WHERE certificate_number = #{certificateNumber} AND id = #{id}
     </delete>
 
-    <update id="updatePublicIndicatorInfo" parameterType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
+    <!-- 根据证件号和 ID 修改公共指标数据 -->
+    <update id="updateByCertificateNumberAndId" parameterType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
         UPDATE public_indicator_info
-        SET student_spec_ratio = #{studentSpecRatio},
+        SET
+            student_spec_ratio = #{studentSpecRatio},
             geographical_weight = #{geographicalWeight},
             sales_intensity_coefficient = #{salesIntensityCoefficient},
             weekly_sales = #{weeklySales},
@@ -32,17 +54,19 @@
             service_request_count = #{serviceRequestCount},
             abnormal_sales_count = #{abnormalSalesCount},
             inventory_sales_ratio = #{inventorySalesRatio},
-            full_order_rate_fluctuation = #{fullOrderRateFluctuation},
-            data_date = CURDATE()
-        WHERE certificate_number = #{certificateNumber}
+            full_order_rate_fluctuation = #{fullOrderRateFluctuation}
+        WHERE certificate_number = #{certificateNumber} AND id = #{id}
     </update>
 
-    <select id="getPublicIndicatorInfoByCertificateNumber" resultType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
-        SELECT * FROM public_indicator_info WHERE certificate_number = #{certificateNumber}
+    <!-- 根据证件号查询公共指标数据 -->
+    <select id="getByCertificateNumber" resultType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
+        SELECT * FROM public_indicator_info
+        WHERE certificate_number = #{certificateNumber}
         ORDER BY data_date DESC
     </select>
 
-    <select id="getAllPublicIndicatorInfos" resultType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
+    <!-- 查询所有公共指标数据，分页查询 -->
+    <select id="getAll" resultType="org.yinxiao.nothing.entity.PublicIndicatorInfo">
         SELECT * FROM public_indicator_info
         ORDER BY data_date DESC
             LIMIT #{offset}, #{limit}
