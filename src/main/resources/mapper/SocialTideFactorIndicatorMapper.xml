@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yinxiao.nothing.mapper.SocialTideFactorIndicatorMapper">
+
+    <!-- 批量插入社会潮汐因子指标数据 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO social_tide_factor_indicator (
+        certificate_number,
+        community_name,
+        resident_population,
+        smoking_rate,
+        geographical_weight,
+        data_date
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.certificateNumber},
+            #{item.communityName},
+            #{item.residentPopulation},
+            #{item.smokingRate},
+            #{item.geographicalWeight},
+            CURDATE()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据证件号删除社会潮汐因子指标数据 -->
+    <delete id="deleteByCertificateNumber" parameterType="string">
+        DELETE FROM social_tide_factor_indicator WHERE certificate_number = #{certificateNumber}
+    </delete>
+
+    <!-- 根据证件号修改社会潮汐因子指标数据 -->
+    <update id="updateByCertificateNumber" parameterType="org.yinxiao.nothing.entity.SocialTideFactorIndicator">
+        UPDATE social_tide_factor_indicator
+        SET
+            community_name = #{communityName},
+            resident_population = #{residentPopulation},
+            smoking_rate = #{smokingRate},
+            geographical_weight = #{geographicalWeight},
+            data_date = CURDATE()
+        WHERE certificate_number = #{certificateNumber}
+    </update>
+
+    <!-- 根据证件号查询社会潮汐因子指标数据 -->
+    <select id="selectByCertificateNumber" resultType="org.yinxiao.nothing.entity.SocialTideFactorIndicator">
+        SELECT * FROM social_tide_factor_indicator
+        WHERE certificate_number = #{certificateNumber}
+        ORDER BY data_date DESC
+    </select>
+
+    <!-- 查询所有社会潮汐因子指标数据，支持分页 -->
+    <select id="selectAll" resultType="org.yinxiao.nothing.entity.SocialTideFactorIndicator">
+        SELECT * FROM social_tide_factor_indicator
+        ORDER BY data_date DESC
+            LIMIT #{offset}, #{limit}
+    </select>
+</mapper>
